@@ -9,9 +9,12 @@
 	<packaging>war</packaging>
 	<name>financeiro</name>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<!-- Dependências -->
 	<dependencies>
-
 		<!-- JSF -->
 		<dependency>
 			<groupId>com.sun.faces</groupId>
@@ -134,18 +137,13 @@
 		<plugins>
 			<!-- Plugin para Compilação -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
-					<encoding>UTF-8</encoding>
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
 			</plugin>
 		</plugins>
 	</build>
