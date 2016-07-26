@@ -12,6 +12,7 @@
 		<h:messages />
 		<h:inputHidden value="#{usuarioBean.usuario.codigo}" />
 		<h:inputHidden value="#{usuarioBean.usuario.ativo}" />
+		<h:inputHidden value="#{usuarioBean.destinoSalvar}" />
 		<h:panelGrid columns="2">
 			<h:outputLabel value="Nome:" for="nome" />
 			<h:inputText id="nome" label="Nome"
@@ -23,7 +24,7 @@
 			<h:inputText id="nascimento" label="Data de Nascimento"
 				value="#{usuarioBean.usuario.nascimento}" size="10" maxlength="10"
 				required="true">
-				<f:convertDateTime dateStyle="medium" pattern="yyyy-MM-dd"/>
+				<f:convertDateTime dateStyle="medium" pattern="yyyy-MM-dd" />
 			</h:inputText>
 			<h:outputLabel value="Celular:" for="celular" />
 			<h:inputText id="celular" label="celular"
