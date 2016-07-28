@@ -13,6 +13,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>in-project</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/src/main/webapp/WEB-INF/lib</url>
+		</repository>
+	</repositories>
+
 	<!-- Dependências -->
 	<dependencies>
 		<!-- JSF -->
@@ -127,6 +135,16 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>facelets-taglib-jsf20-spring-3</artifactId>
+			<version>0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>taglib-core</artifactId>
+			<version>0.4</version>
 		</dependency>
 
 		<!-- Driver do MySQL -->
