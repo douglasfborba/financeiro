@@ -4,13 +4,40 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 	<title>Login</title>
+	<script>
+		document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+	</script>
 </h:head>
 <h:body>
 	<h1>Login</h1>
-	<hr />
 	<h:form>
 		<h:commandLink action="#{usuarioBean.novo}" value="Registre-se" />
 	</h:form>
-	<hr />
+	<h:panelGroup rendered="#{!empty param.login_error}">
+		<span style="color: red">Erro ao efetuar o login.</span>
+		<p>Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}</p>
+	</h:panelGroup>
+	<form id="login" method="post"
+		action="#{request.contextPath}/j_spring_security_check">
+		<table>
+			<tr>
+				<td>Login:</td>
+				<td><input type="text" name="j_username" /></td>
+			</tr>
+			<tr>
+				<td>Senha:</td>
+				<td><input type="text" name="j_password" /></td>
+			</tr>
+			<tr>
+				<td align="right"><input type="checkbox"
+					name="_spring_security_remember_me" /></td>
+				<td>Entrar automaticamente.</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="Entrar" /></td>
+			</tr>
+		</table>
+	</form>
 </h:body>
 </html>
