@@ -2,10 +2,17 @@ package br.com.financeiro.usuario;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -17,15 +24,21 @@ public class Usuario implements Serializable {
 	@GeneratedValue
 	private Integer codigo;
 	private String nome;
+	private String email;
 
 	@NaturalId
-	private String email;
 	private String login;
 	private String senha;
 	private Date nascimento;
 	private String celular;
 	private String idioma;
 	private boolean ativo;
+
+	@ElementCollection(targetClass = String.class)
+	@JoinTable(name = "usuario_permissao", uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "usuario", "permissao" }) }, joinColumns = @JoinColumn(name = "usuario"))
+	@Column(name = "permisao", length = 50)
+	private Set<String> permisao = new HashSet<String>();
 
 	public Integer getCodigo() {
 		return codigo;
@@ -99,6 +112,14 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
+	public Set<String> getPermisao() {
+		return permisao;
+	}
+
+	public void setPermisao(Set<String> permisao) {
+		this.permisao = permisao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,6 +132,7 @@ public class Usuario implements Serializable {
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((nascimento == null) ? 0 : nascimento.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((permisao == null) ? 0 : permisao.hashCode());
 		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
 		return result;
 	}
@@ -160,6 +182,11 @@ public class Usuario implements Serializable {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (permisao == null) {
+			if (other.permisao != null)
+				return false;
+		} else if (!permisao.equals(other.permisao))
 			return false;
 		if (senha == null) {
 			if (other.senha != null)
