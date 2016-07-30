@@ -11,7 +11,7 @@
 	<h1>Gerenciador Financeiro Pessoal</h1>
 	Usuário logado #{request.remoteUser}<br />
 	<h:form>
-		<sec:ifAnyGranted roles="ROLE_ADMINISTRATOR">
+		<sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
 			<h:commandLink action="/admin/principal" value="Administrativo">
 				<h:graphicImage library="imagens" name="administrativo16.png" />
 			</h:commandLink>

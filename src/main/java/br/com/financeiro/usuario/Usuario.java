@@ -37,7 +37,7 @@ public class Usuario implements Serializable {
 	@ElementCollection(targetClass = String.class)
 	@JoinTable(name = "usuario_permissao", uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "usuario", "permissao" }) }, joinColumns = @JoinColumn(name = "usuario"))
-	@Column(name = "permisao", length = 50)
+	@Column(name = "permissao", length = 50)
 	private Set<String> permissao = new HashSet<String>();
 
 	public Integer getCodigo() {
@@ -116,7 +116,7 @@ public class Usuario implements Serializable {
 		return permissao;
 	}
 
-	public void setPermisao(Set<String> permissao) {
+	public void setPermissao(Set<String> permissao) {
 		this.permissao = permissao;
 	}
 
