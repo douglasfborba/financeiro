@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
 	@JoinTable(name = "usuario_permissao", uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "usuario", "permissao" }) }, joinColumns = @JoinColumn(name = "usuario"))
 	@Column(name = "permisao", length = 50)
-	private Set<String> permisao = new HashSet<String>();
+	private Set<String> permissao = new HashSet<String>();
 
 	public Integer getCodigo() {
 		return codigo;
@@ -112,12 +112,12 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public Set<String> getPermisao() {
-		return permisao;
+	public Set<String> getPermissao() {
+		return permissao;
 	}
 
-	public void setPermisao(Set<String> permisao) {
-		this.permisao = permisao;
+	public void setPermisao(Set<String> permissao) {
+		this.permissao = permissao;
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class Usuario implements Serializable {
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((nascimento == null) ? 0 : nascimento.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((permisao == null) ? 0 : permisao.hashCode());
+		result = prime * result + ((permissao == null) ? 0 : permissao.hashCode());
 		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
 		return result;
 	}
@@ -183,10 +183,10 @@ public class Usuario implements Serializable {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (permisao == null) {
-			if (other.permisao != null)
+		if (permissao == null) {
+			if (other.permissao != null)
 				return false;
-		} else if (!permisao.equals(other.permisao))
+		} else if (!permissao.equals(other.permissao))
 			return false;
 		if (senha == null) {
 			if (other.senha != null)
