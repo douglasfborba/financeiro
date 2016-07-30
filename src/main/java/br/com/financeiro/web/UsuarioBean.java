@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.util.DigestUtils;
+
 import br.com.financeiro.usuario.Usuario;
 import br.com.financeiro.usuario.UsuarioRN;
 
@@ -18,6 +20,7 @@ public class UsuarioBean {
 	private String confirmarSenha;
 	private List<Usuario> lista;
 	private String destinoSalvar;
+	private String senhaCriptografada;
 
 	public String novo() {
 		this.destinoSalvar = "usuarioSucesso";
@@ -29,10 +32,16 @@ public class UsuarioBean {
 	public String salvar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String senha = this.usuario.getSenha();
-		if (!senha.equals(this.confirmarSenha)) {
+		if (senha != null && senha.trim().length() > 0 && !senha.equals(this.confirmarSenha)) {
 			FacesMessage facesMessage = new FacesMessage("A senha não foi confirmada corretamente");
 			context.addMessage(null, facesMessage);
 			return null;
+		}
+		if (senha != null && senha.trim().length() == 0) {
+			this.usuario.setSenha(this.senhaCriptografada);
+		} else {
+			String senhaCripto = DigestUtils.md5DigestAsHex(senha.getBytes());
+			this.usuario.setSenha(senhaCripto);
 		}
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario);
@@ -40,7 +49,7 @@ public class UsuarioBean {
 	}
 
 	public String editar() {
-		this.confirmarSenha = this.usuario.getSenha();
+		this.senhaCriptografada = this.usuario.getSenha();
 		return "/publico/usuario";
 	}
 
@@ -103,5 +112,13 @@ public class UsuarioBean {
 
 	public void setDestinoSalvar(String destinoSalvar) {
 		this.destinoSalvar = destinoSalvar;
+	}
+
+	public String getSenhaCriptografada() {
+		return senhaCriptografada;
+	}
+
+	public void setSenhaCriptografada(String senhaCriptografada) {
+		this.senhaCriptografada = senhaCriptografada;
 	}
 }
