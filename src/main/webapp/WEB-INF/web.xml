@@ -27,6 +27,10 @@
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
+	<context-param>
+		<param-name>com.sun.faces.ExpressionFactory</param-name>
+		<param-value>com.sun.el.ExpressionFactoryImp</param-value>
+	</context-param>
 	<resource-ref>
 		<description>Datasource Financeiro</description>
 		<res-ref-name>jdbc/financeiro</res-ref-name>
@@ -38,7 +42,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/applicationContext.xml
-			/WEB-INF/applcationContext-security.xml
+			/WEB-INF/applicationContext-security.xml
 		</param-value>
 	</context-param>
 	<filter>
