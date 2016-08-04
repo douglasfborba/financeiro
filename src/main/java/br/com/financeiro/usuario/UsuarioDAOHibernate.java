@@ -39,7 +39,7 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	@Override
 	public Usuario buscarPorLogin(String login) {
-		String hql = "select u from Usuario u whre u.login = :login";
+		String hql = "select u from Usuario u where u.login = :login";
 		Query consulta = this.session.createQuery(hql);
 		consulta.setString("login", login);
 		return (Usuario) consulta.uniqueResult();
