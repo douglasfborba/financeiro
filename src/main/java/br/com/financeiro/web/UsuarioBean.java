@@ -10,6 +10,8 @@ import javax.faces.context.FacesContext;
 
 import org.springframework.util.DigestUtils;
 
+import br.com.financeiro.conta.Conta;
+import br.com.financeiro.conta.ContaRN;
 import br.com.financeiro.usuario.Usuario;
 import br.com.financeiro.usuario.UsuarioRN;
 
@@ -21,6 +23,7 @@ public class UsuarioBean {
 	private List<Usuario> lista;
 	private String destinoSalvar;
 	private String senhaCriptografada;
+	private Conta conta = new Conta();
 
 	public String novo() {
 		this.destinoSalvar = "usuarioSucesso";
@@ -45,6 +48,12 @@ public class UsuarioBean {
 		}
 		UsuarioRN usuarioRN = new UsuarioRN();
 		usuarioRN.salvar(this.usuario);
+		if (this.conta.getDescricao() != null) {
+			this.conta.setUsuario(this.usuario);
+			this.conta.setFavorita(true);
+			ContaRN contaRN = new ContaRN();
+			contaRN.salvar(this.conta);
+		}
 		return this.destinoSalvar;
 	}
 
@@ -120,5 +129,13 @@ public class UsuarioBean {
 
 	public void setSenhaCriptografada(String senhaCriptografada) {
 		this.senhaCriptografada = senhaCriptografada;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 }
