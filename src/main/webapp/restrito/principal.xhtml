@@ -10,17 +10,20 @@
 <h:body>
 	<h1>Gerenciador Financeiro Pessoal</h1>
 	Usuário logado #{request.remoteUser}<br />
+	Nome do usuário logado #{contextoBean.usuarioLogado.nome}<br />
 	<h:form>
+		<h:commandButton action="conta" value="Conta" />
+		<h:selectOneMenu value="#{contextoBean.contaAtiva.conta}"
+			valueChangeListener="#{contextoBean.setContaAtiva}"
+			rendered="#{!empty contextoBean}" onchange="submit()">
+			<f:selectItems value="#{contaBean.lista}" var="conta"
+				itemValue="#{conta.conta}" itemLabel="#{conta.descricao}" />
+		</h:selectOneMenu>
 		<sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
-			<h:commandLink action="/admin/principal" value="Administrativo">
-				<h:graphicImage library="imagens" name="administrativo16.png" />
-			</h:commandLink>
+			<h:commandButton action="/admin/principal" value="Administração" />
 		</sec:ifAnyGranted>
-		<a
-			onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
-			title="Sair"> <h:graphicImage library="imagens"
-				name="logout16.png" />
-		</a>
+		<input type="button" value="Logout"
+			onclick="document.location='#{request.contextPath}/j_spring_security_logout'" />
 	</h:form>
 </h:body>
 </html>
