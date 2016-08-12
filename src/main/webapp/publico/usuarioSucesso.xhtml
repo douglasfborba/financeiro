@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
-<h:head>
-	<title>Cadastro de Usuários</title>
-</h:head>
-<h:body>
-	<h1>
-		<h:outputText value="#{usuarioBean.usuario.nome}" />, seja Bem-vindo
-	</h1>
-	Seu cadastros foi efetuado com sucesso. <br />
-	Clique <a href="login.jsf">aqui</a> para efetuar o login.
-</h:body>
+<ui:composition template="/templates/interna.xhtml">
+	<ui:define name="titulo">
+    	Cadastro de Usuários
+	</ui:define>
+	<ui:define name="corpo">
+		<h1>
+			<h:outputText value="#{usuarioBean.usuario.nome}" />
+			, seja Bem-vindo
+		</h1>
+		
+		Seu cadastro foi efetuado com sucesso.
+		<br />
+		Clique <a href="login.jsf">aqui</a> para efetuar o login.
+		</ui:define>
+</ui:composition>
 </html>
