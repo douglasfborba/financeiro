@@ -2,6 +2,7 @@ package br.com.financeiro.usuario;
 
 import java.util.List;
 
+import br.com.financeiro.categoria.CategoriaRN;
 import br.com.financeiro.util.DAOFactory;
 
 public class UsuarioRN {
@@ -20,12 +21,16 @@ public class UsuarioRN {
 		if (codigo == null || codigo == 0) {
 			usuario.getPermissao().add("ROLE_USUARIO");
 			this.usuarioDAO.salvar(usuario);
+			CategoriaRN categoriaRN = new CategoriaRN();
+			categoriaRN.salvaEstruturaPadrao(usuario);
 		} else {
 			this.usuarioDAO.atualizar(usuario);
 		}
 	}
 
 	public void excluir(Usuario usuario) {
+		CategoriaRN categoriaRN = new CategoriaRN();
+		categoriaRN.excluir(usuario);
 		this.usuarioDAO.excluir(usuario);
 	}
 
