@@ -57,7 +57,9 @@ public class CategoriaBean {
 
 	public void excluir() {
 		CategoriaRN categoriaRN = new CategoriaRN();
-		categoriaRN.excluir(this.editada);
+		if (this.editada != null && this.editada.getCodigo() != null) {
+			categoriaRN.excluir(this.editada);
+		}
 		this.editada = null;
 		this.mostraEdicao = false;
 		this.categoriasTree = null;
