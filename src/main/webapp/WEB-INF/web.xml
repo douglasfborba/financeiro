@@ -31,6 +31,10 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>none</param-value>
 	</context-param>
+	<context-param>
+		<param-name>primefaces.skin</param-name>
+		<param-value>none</param-value>
+	</context-param>
 	<filter>
 		<display-name>ConexaoHibernateFilter</display-name>
 		<filter-name>ConexaoHibernateFilter</filter-name>
@@ -58,9 +62,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/applicationContext.xml
-			/WEB-INF/applicationContext-security.xml
-		</param-value>
+				/WEB-INF/applicationContext.xml
+				/WEB-INF/applicationContext-security.xml
+			</param-value>
 	</context-param>
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
