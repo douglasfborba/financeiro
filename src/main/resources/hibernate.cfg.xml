@@ -12,5 +12,6 @@
 		<mapping class="br.com.financeiro.usuario.Usuario" />
 		<mapping class="br.com.financeiro.conta.Conta" />
 		<mapping class="br.com.financeiro.categoria.Categoria" />
+		<mapping class="br.com.financeiro.lancamento.Lancamento" />
 	</session-factory>
 </hibernate-configuration>
