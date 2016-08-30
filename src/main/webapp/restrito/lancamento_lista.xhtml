@@ -20,7 +20,7 @@
 			<p:column width="15">
 				<p:commandLink action="#{lancamentoBean.excluir}" update="listagem"
 					onclick="if (!confirm('Confirma a exclusão do lançamento #{lancamento.descricao}?')) return false;">
-					<h:graphicImage library="imagens" value="excluir16.png" />
+					<h:graphicImage library="imagens" name="excluir16.png" />
 					<f:setPropertyActionListener value="#{lancamento}"
 						target="#{lancamentoBean.editado}" />
 				</p:commandLink>

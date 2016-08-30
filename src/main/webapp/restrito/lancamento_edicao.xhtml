@@ -15,7 +15,7 @@
 			<h:outputLabel value="Descrição" for="descricao" />
 			<h:outputLabel value="Valor" for="valor" />
 			<p:calendar id="data" value="#{lancamentoBean.editado.data}"
-				pattern="dd/MM/yyyy" popupIcon="true" />
+				pattern="dd/MM/yyyy" />
 			<h:selectOneMenu id="categoria"
 				value="#{lancamentoBean.editado.categoria}">
 				<f:selectItems value="#{categoriaBean.categoriasSelect}" />
