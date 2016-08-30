@@ -31,7 +31,7 @@ public class LancamentoRN {
 		return saldoInicial + saldoNaData;
 	}
 
-	public List<Lancamento> lista(Conta conta, Date dataInicio, Date dataFim) {
+	public List<Lancamento> listar(Conta conta, Date dataInicio, Date dataFim) {
 		return this.lancamentoDAO.listar(conta, dataInicio, dataFim);
 	}
 }
