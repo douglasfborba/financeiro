@@ -1,5 +1,6 @@
 package br.com.financeiro.web;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -15,7 +16,8 @@ import br.com.financeiro.usuario.UsuarioRN;
 
 @ManagedBean(name = "contextoBean")
 @SessionScoped
-public class ContextoBean {
+public class ContextoBean implements Serializable {
+	private static final long serialVersionUID = -2675240132433506995L;
 	private Usuario usuarioLogado = null;
 	private Conta contaAtiva = null;
 

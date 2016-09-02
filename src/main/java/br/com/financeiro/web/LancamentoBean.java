@@ -1,5 +1,6 @@
 package br.com.financeiro.web;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +18,8 @@ import br.com.financeiro.web.util.ContextoUtil;
 
 @ManagedBean(name = "lancamentoBean")
 @ViewScoped
-public class LancamentoBean {
+public class LancamentoBean implements Serializable {
+	private static final long serialVersionUID = 6719556085307527678L;
 	private List<Lancamento> lista;
 	private List<Double> saldos = new ArrayList<Double>();
 	private float saldoGeral;
