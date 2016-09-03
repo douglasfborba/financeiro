@@ -32,7 +32,7 @@
 					value="#{lancamento}" />
 			</p:commandLink>
 		</p:column>
-		<p:column width="15" rendered="#{cc.attrs.botaoExcluir}">
+		<p:column width="15" rendered="#{cc.attrs.botaoExclusao}">
 			<p:commandLink action="#{lancamentoBean.excluir}" update="listagem"
 				onclick="if (!confirm('Confirma a exclusão do lançamento #{lancamento.descricao}?')) return false;">
 				<h:graphicImage library="imagens" name="excluir16.png" />
