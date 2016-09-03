@@ -15,7 +15,7 @@ import br.com.financeiro.conta.Conta;
 public class LancamentoDAOHibernate implements LancamentoDAO {
 	private Session session;
 
-	public void setSesion(Session session) {
+	public void setSession(Session session) {
 		this.session = session;
 	}
 
@@ -30,8 +30,8 @@ public class LancamentoDAOHibernate implements LancamentoDAO {
 	}
 
 	@Override
-	public Lancamento carregar(Integer lancamento) {
-		return (Lancamento) this.session.get(Lancamento.class, lancamento);
+	public Lancamento carregar(int codigo) {
+		return (Lancamento) this.session.get(Lancamento.class, codigo);
 	}
 
 	@SuppressWarnings("unchecked")
