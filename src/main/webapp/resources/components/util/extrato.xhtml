@@ -43,7 +43,7 @@
 		<p:column width="70">
 			<f:facet name="header">Data</f:facet>
 			<h:outputText value="#{lancamento.data}">
-				<f:convertDateTime dateStyle="medium" />
+				<f:convertDateTime pattern="dd/MM/yyyy" />
 			</h:outputText>
 		</p:column>
 		<p:column width="#{cc.attrs.larguraDescricao}">
