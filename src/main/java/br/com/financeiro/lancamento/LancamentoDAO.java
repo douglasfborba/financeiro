@@ -10,7 +10,7 @@ public interface LancamentoDAO {
 
 	public void excluir(Lancamento lancamento);
 
-	public Lancamento carregar(Integer lancamento);
+	public Lancamento carregar(int codigo);
 
 	public List<Lancamento> listar(Conta conta, Date dataInicio, Date dataFim);
 
