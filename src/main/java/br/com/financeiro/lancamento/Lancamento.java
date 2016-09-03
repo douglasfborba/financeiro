@@ -21,6 +21,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import br.com.financeiro.categoria.Categoria;
 import br.com.financeiro.conta.Conta;
+import br.com.financeiro.entidade.Entidade;
 import br.com.financeiro.usuario.Usuario;
 
 @Entity
@@ -50,6 +51,12 @@ public class Lancamento implements Serializable {
 	@JoinColumn(name = "categoria", nullable = false)
 	@ForeignKey(name = "fk_lancamento_categoria")
 	private Categoria categoria;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "entidade", nullable = false)
+	@ForeignKey(name = "fk_lancamento_entidade")
+	private Entidade entidade;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -90,6 +97,14 @@ public class Lancamento implements Serializable {
 		this.categoria = categoria;
 	}
 
+	public Entidade getEntidade() {
+		return entidade;
+	}
+
+	public void setEntidade(Entidade entidade) {
+		this.entidade = entidade;
+	}
+
 	public Date getData() {
 		return data;
 	}
@@ -122,6 +137,7 @@ public class Lancamento implements Serializable {
 		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((entidade == null) ? 0 : entidade.hashCode());
 		result = prime * result + ((lancamento == null) ? 0 : lancamento.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
@@ -156,6 +172,11 @@ public class Lancamento implements Serializable {
 			if (other.descricao != null)
 				return false;
 		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (entidade == null) {
+			if (other.entidade != null)
+				return false;
+		} else if (!entidade.equals(other.entidade))
 			return false;
 		if (lancamento == null) {
 			if (other.lancamento != null)

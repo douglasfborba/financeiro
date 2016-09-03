@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.financeiro.categoria.Categoria;
 import br.com.financeiro.conta.Conta;
+import br.com.financeiro.entidade.Entidade;
 import br.com.financeiro.lancamento.Lancamento;
 import br.com.financeiro.lancamento.LancamentoRN;
 import br.com.financeiro.web.util.ContextoUtil;
@@ -26,6 +27,7 @@ public class LancamentoBean implements Serializable {
 	private Lancamento editado = new Lancamento();
 	private List<Lancamento> listaAteHoje;
 	private List<Lancamento> listaFuturos;
+	private Entidade entidade;
 
 	public LancamentoBean() {
 		this.novo();
@@ -123,5 +125,13 @@ public class LancamentoBean implements Serializable {
 			this.listaFuturos = lancamentoRN.listar(conta, amanha.getTime(), null);
 		}
 		return this.listaFuturos;
+	}
+
+	public Entidade getEntidade() {
+		return entidade;
+	}
+
+	public void setEntidade(Entidade entidade) {
+		this.entidade = entidade;
 	}
 }
