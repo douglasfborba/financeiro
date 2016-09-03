@@ -4,6 +4,8 @@ import br.com.financeiro.categoria.CategoriaDAO;
 import br.com.financeiro.categoria.CategoriaDAOHibernate;
 import br.com.financeiro.conta.ContaDAO;
 import br.com.financeiro.conta.ContaDAOHibernate;
+import br.com.financeiro.entidade.EntidadeDAO;
+import br.com.financeiro.entidade.EntidadeDAOHibernate;
 import br.com.financeiro.lancamento.LancamentoDAO;
 import br.com.financeiro.lancamento.LancamentoDAOHibernate;
 import br.com.financeiro.usuario.UsuarioDAO;
@@ -28,9 +30,15 @@ public class DAOFactory {
 		return categoriaDAO;
 	}
 
+	public static EntidadeDAO criarEntidadeDAO() {
+		EntidadeDAOHibernate entidadeDAO = new EntidadeDAOHibernate();
+		entidadeDAO.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+		return entidadeDAO;
+	}
+
 	public static LancamentoDAO criarLancamentoDAO() {
 		LancamentoDAOHibernate lancamentoDAO = new LancamentoDAOHibernate();
-		lancamentoDAO.setSesion(HibernateUtil.getSessionFactory().getCurrentSession());
+		lancamentoDAO.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
 		return lancamentoDAO;
 	}
 }
