@@ -62,8 +62,9 @@
 			<f:facet name="header">Saldo</f:facet>
 			<h:outputText
 				style="color: #{cc.attrs.saldos[index] gt 0 ? 'green' : 'red'}; text-align: right; display: block;"
-				value="#{cc.attrs.saldos[index]}" />
-			<f:convertNumber minFractionDigits="2" />
+				value="#{cc.attrs.saldos[index]}">
+				<f:convertNumber minFractionDigits="2" />
+			</h:outputText>
 		</p:column>
 	</p:dataTable>
 </composite:implementation>
