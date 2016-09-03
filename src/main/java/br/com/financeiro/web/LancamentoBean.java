@@ -24,6 +24,8 @@ public class LancamentoBean implements Serializable {
 	private List<Double> saldos = new ArrayList<Double>();
 	private float saldoGeral;
 	private Lancamento editado = new Lancamento();
+	private List<Lancamento> listaAteHoje;
+	private List<Lancamento> listaFuturos;
 
 	public LancamentoBean() {
 		this.novo();
@@ -100,7 +102,26 @@ public class LancamentoBean implements Serializable {
 		return this.lista;
 	}
 
-	public void setLista(List<Lancamento> lista) {
-		this.lista = lista;
+	public List<Lancamento> getListaAteHoje() {
+		if (this.listaAteHoje == null) {
+			ContextoBean contextoBean = ContextoUtil.getContextoBean();
+			Conta conta = contextoBean.getContaAtiva();
+			Calendar hoje = new GregorianCalendar();
+			LancamentoRN lancamentoRN = new LancamentoRN();
+			this.listaAteHoje = lancamentoRN.listar(conta, null, hoje.getTime());
+		}
+		return this.listaAteHoje;
+	}
+
+	public List<Lancamento> getListaFuturos() {
+		if (this.listaFuturos == null) {
+			ContextoBean contextoBean = ContextoUtil.getContextoBean();
+			Conta conta = contextoBean.getContaAtiva();
+			Calendar amanha = new GregorianCalendar();
+			amanha.add(Calendar.DAY_OF_MONTH, 1);
+			LancamentoRN lancamentoRN = new LancamentoRN();
+			this.listaFuturos = lancamentoRN.listar(conta, amanha.getTime(), null);
+		}
+		return this.listaFuturos;
 	}
 }
