@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<ui:composition template="/templates/interna.xhtml">
+	<ui:define name="corpo">
+		<h:form id="edicao">
+			<h:messages />
+			<h:inputHidden value="#{entidadeBean.entidade.codigo}" />
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Nome:" for="nome" />
+				<h:outputLabel value="Classificação:" for="classificacao" />
+				<h:inputText id="nome" value="#{entidadeBean.entidade.nome}"
+					size="50" required="true" />
+				<p:rating id="classificacao" stars="5"
+					value="#{entidadeBean.entidade.classificacao}" />
+				<p:commandButton value="Novo" action="#{entidadeBean.novo}"
+					process="@this" update="edicao" />
+				<p:commandButton value="Salvar" action="#{entidadeBean.salvar}"
+					update="listagem, edicao" />
+			</h:panelGrid>
+			<br/>
+		</h:form>
+		<h:form id="listagem">
+			<p:dataTable value="#{entidadeBean.lista}" var="entidade"
+				rendered="#{!empty entidadeBean.lista}" rules="rows" cellpadding="5">
+				<p:column>
+					<p:commandLink action="#{entidadeBean.editar}" update="edicao">
+						<h:graphicImage library="imagens" name="editar16.png" />
+						<f:setPropertyActionListener target="#{entidadeBean.entidade}"
+							value="#{entidade}" />
+					</p:commandLink>
+				</p:column>
+				<p:column>
+					<p:commandLink action="#{entidadeBean.excluir}" update="listagem"
+						onclick="if (!confirm('Confirma a exclusão do entidade #{entidade.nome}?')) return false;">
+						<h:graphicImage library="imagens" name="excluir16.png" />
+						<f:setPropertyActionListener target="#{entidadeBean.entidade}"
+							value="#{entidade}" />
+					</p:commandLink>
+				</p:column>
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+					#{entidade.nome}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Classificação</f:facet>
+					<p:rating value="#{entidade.classificacao}" readonly="true"
+						cancel="false" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
