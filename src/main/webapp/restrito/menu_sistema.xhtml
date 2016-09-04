@@ -18,6 +18,7 @@
 							<f:selectItems value="#{contaBean.lista}" var="conta"
 								itemValue="#{conta.conta}" itemLabel="#{conta.descricao}" />
 						</h:selectOneMenu> 
+						<h:commandButton value="Entidades" action="/restrito/entidade" />
 						<h:commandButton value="Lançamentos" action="/restrito/lancamento" />
 					</td>
 					<td align="right"><sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
