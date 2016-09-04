@@ -7,14 +7,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.financeiro.categoria.Categoria;
 import br.com.financeiro.conta.Conta;
-import br.com.financeiro.entidade.Entidade;
 import br.com.financeiro.lancamento.Lancamento;
 import br.com.financeiro.lancamento.LancamentoRN;
+import br.com.financeiro.util.RNException;
 import br.com.financeiro.web.util.ContextoUtil;
 
 @ManagedBean(name = "lancamentoBean")
@@ -27,7 +29,6 @@ public class LancamentoBean implements Serializable {
 	private Lancamento editado = new Lancamento();
 	private List<Lancamento> listaAteHoje;
 	private List<Lancamento> listaFuturos;
-	private Entidade entidade;
 
 	public LancamentoBean() {
 		this.novo();
@@ -38,7 +39,8 @@ public class LancamentoBean implements Serializable {
 		this.editado.setData(new Date(System.currentTimeMillis()));
 	}
 
-	public void editar() { }
+	public void editar() {
+	}
 
 	public void salvar() {
 		ContextoBean contextoBean = ContextoUtil.getContextoBean();
@@ -91,7 +93,13 @@ public class LancamentoBean implements Serializable {
 			Calendar inicio = new GregorianCalendar();
 			inicio.add(Calendar.MONTH, -1);
 			LancamentoRN lancamentoRN = new LancamentoRN();
-			this.saldoGeral = lancamentoRN.saldo(conta, dataSaldo.getTime());
+			try {
+				this.saldoGeral = lancamentoRN.saldo(conta, dataSaldo.getTime());
+			} catch (RNException e) {
+				FacesContext context = FacesContext.getCurrentInstance();
+				FacesMessage facesMessage = new FacesMessage(e.getMessage());
+				context.addMessage(null, facesMessage);
+			}
 			this.lista = lancamentoRN.listar(conta, inicio.getTime(), null);
 			Categoria categoria = null;
 			double saldo = this.saldoGeral;
@@ -125,13 +133,5 @@ public class LancamentoBean implements Serializable {
 			this.listaFuturos = lancamentoRN.listar(conta, amanha.getTime(), null);
 		}
 		return this.listaFuturos;
-	}
-
-	public Entidade getEntidade() {
-		return entidade;
-	}
-
-	public void setEntidade(Entidade entidade) {
-		this.entidade = entidade;
 	}
 }
