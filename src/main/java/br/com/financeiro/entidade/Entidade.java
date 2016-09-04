@@ -20,7 +20,7 @@ public class Entidade implements Serializable {
 	@Column(unique = true, nullable = false)
 	private String nome;
 
-	private Integer classificacao;
+	private Double classificacao;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -38,11 +38,11 @@ public class Entidade implements Serializable {
 		this.nome = nome;
 	}
 
-	public Integer getClassificacao() {
+	public Double getClassificacao() {
 		return classificacao;
 	}
 
-	public void setClassificacao(Integer classificacao) {
+	public void setClassificacao(Double classificacao) {
 		this.classificacao = classificacao;
 	}
 
