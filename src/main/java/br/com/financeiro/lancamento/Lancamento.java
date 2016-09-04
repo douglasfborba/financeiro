@@ -52,7 +52,7 @@ public class Lancamento implements Serializable {
 	@ForeignKey(name = "fk_lancamento_categoria")
 	private Categoria categoria;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "entidade", nullable = false)
 	@ForeignKey(name = "fk_lancamento_entidade")
