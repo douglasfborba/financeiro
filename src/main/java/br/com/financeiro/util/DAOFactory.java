@@ -2,6 +2,8 @@ package br.com.financeiro.util;
 
 import br.com.financeiro.categoria.CategoriaDAO;
 import br.com.financeiro.categoria.CategoriaDAOHibernate;
+import br.com.financeiro.cheque.ChequeDAO;
+import br.com.financeiro.cheque.ChequeDAOHibernate;
 import br.com.financeiro.conta.ContaDAO;
 import br.com.financeiro.conta.ContaDAOHibernate;
 import br.com.financeiro.entidade.EntidadeDAO;
@@ -40,5 +42,11 @@ public class DAOFactory {
 		LancamentoDAOHibernate lancamentoDAO = new LancamentoDAOHibernate();
 		lancamentoDAO.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
 		return lancamentoDAO;
+	}
+
+	public static ChequeDAO criarChequeDAO() {
+		ChequeDAOHibernate chequeDAO = new ChequeDAOHibernate();
+		chequeDAO.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+		return chequeDAO;
 	}
 }
