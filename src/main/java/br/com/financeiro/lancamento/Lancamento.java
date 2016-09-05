@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,6 +21,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import br.com.financeiro.categoria.Categoria;
+import br.com.financeiro.cheque.Cheque;
 import br.com.financeiro.conta.Conta;
 import br.com.financeiro.entidade.Entidade;
 import br.com.financeiro.usuario.Usuario;
@@ -57,6 +59,9 @@ public class Lancamento implements Serializable {
 	@JoinColumn(name = "entidade", nullable = false)
 	@ForeignKey(name = "fk_lancamento_entidade")
 	private Entidade entidade;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "lancamento")
+	private Cheque cheque;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -105,6 +110,14 @@ public class Lancamento implements Serializable {
 		this.entidade = entidade;
 	}
 
+	public Cheque getCheque() {
+		return cheque;
+	}
+
+	public void setCheque(Cheque cheque) {
+		this.cheque = cheque;
+	}
+
 	public Date getData() {
 		return data;
 	}
@@ -134,6 +147,7 @@ public class Lancamento implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((cheque == null) ? 0 : cheque.hashCode());
 		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
@@ -157,6 +171,11 @@ public class Lancamento implements Serializable {
 			if (other.categoria != null)
 				return false;
 		} else if (!categoria.equals(other.categoria))
+			return false;
+		if (cheque == null) {
+			if (other.cheque != null)
+				return false;
+		} else if (!cheque.equals(other.cheque))
 			return false;
 		if (conta == null) {
 			if (other.conta != null)
