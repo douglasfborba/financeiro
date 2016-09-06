@@ -10,18 +10,20 @@
 		<h:form id="menu">
 			<table width="100%">
 				<tr>
-					<td><h:commandButton value="Contas" action="/restrito/conta" />
+					<td>
+						<h:commandButton value="Contas" action="/restrito/conta" />
 						<h:commandButton value="Categorias" action="/restrito/categoria" />
 						<h:selectOneMenu value="#{contextoBean.contaAtiva.conta}"
 							valueChangeListener="#{contextoBean.setContaAtiva}"
 							rendered="#{!empty contextoBean}" onchange="submit()">
 							<f:selectItems value="#{contaBean.lista}" var="conta"
 								itemValue="#{conta.conta}" itemLabel="#{conta.descricao}" />
-						</h:selectOneMenu> 
-						<h:commandButton value="Entidades" action="/restrito/entidade" />
+						</h:selectOneMenu> <h:commandButton value="Entidades" action="/restrito/entidade" />
+						<h:commandButton value="Cheque" action="/restrito/cheque" />
 						<h:commandButton value="Lançamentos" action="/restrito/lancamento" />
 					</td>
-					<td align="right"><sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
+					<td align="right">
+						<sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
 							<h:commandLink action="/admin/principal" title="Administrativo">
 								<h:graphicImage library="imagens" name="administrativo16.png" />
 							</h:commandLink>
@@ -30,7 +32,8 @@
 						</h:commandLink> <h:outputLink value="javascript:void(0)" title="Sair"
 							onclick="document.location='#{request.contextPath}/j_spring_security_logout'">
 							<h:graphicImage library="imagens" name="logout16.png" />
-						</h:outputLink></td>
+						</h:outputLink>
+					</td>
 				</tr>
 			</table>
 		</h:form>
