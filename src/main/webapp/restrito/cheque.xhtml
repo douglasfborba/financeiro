@@ -11,9 +11,9 @@
 	<ui:define name="corpo">
 		<h:form id="idiomas">
 			<ui:repeat value="#{contextoBean.idiomas}" var="idioma">
-				<h:commandLink action="#{contextoBean.setIdiomaUsuario(idioma)}">
-					<h:graphicImage library="imagens" value="bandeira_#{idioma}.png"
-						title="#{msg['idioma_'.concat(idioma)]}" />
+				<h:commandLink action="#{contextoBean.setIdiomaUsuario(idioma)}" style="padding-right:5px;">
+					<h:graphicImage library="imagens" name="bandeira_#{idioma}.png"
+						title="#{msg['idioma_'.concat(idioma)]}"/>
 				</h:commandLink>
 			</ui:repeat>
 		</h:form>
