@@ -9,14 +9,15 @@
 	<h:form id="edicao">
 		<h:messages />
 		<h:inputHidden value="#{lancamentoBean.editado.lancamento}" />
-		<h:panelGrid columns="5">
+		<h:panelGrid columns="6">
 			<h:outputLabel value="Data:" for="data" />
 			<h:outputLabel value="Categoria:" for="categoria" />
 			<h:outputLabel value="Entidade:" for="entidade" />
 			<h:outputLabel value="Descrição:" for="descricao" />
 			<h:outputLabel value="Valor:" for="valor" />
+			<h:outputLabel value="Cheque:" for="numeroCheque" />
 			<p:calendar id="data" value="#{lancamentoBean.editado.data}"
-				pattern="dd/MM/yyyy" />
+				pattern="dd/MM/yyyy" mindate="#{lancamentoBean.dataCadastroConta}" />
 			<h:selectOneMenu id="categoria"
 				value="#{lancamentoBean.editado.categoria}">
 				<f:selectItems value="#{categoriaBean.categoriasSelect}" />
@@ -34,6 +35,9 @@
 				<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
 				<f:validateDoubleRange minimum="0" />
 			</h:inputText>
+			<h:inputText id="numeroCheque" value="#{lancamentoBean.numeroCheque}"
+				maxlength="6" size="6"
+				valueChangeListener="#{lancamentoBean.mudouCheque}" />
 			<p:commandButton value="Novo" action="#{lancamentoBean.novo}"
 				process="@this" update="edicao" />
 			<p:commandButton value="Salvar" action="#{lancamentoBean.salvar}"
