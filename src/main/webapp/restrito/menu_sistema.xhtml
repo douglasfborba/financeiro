@@ -19,11 +19,11 @@
 							<f:selectItems value="#{contaBean.lista}" var="conta"
 								itemValue="#{conta.conta}" itemLabel="#{conta.descricao}" />
 						</h:selectOneMenu> <h:commandButton value="Entidades" action="/restrito/entidade" />
-						<h:commandButton value="Cheques" action="/restrito/cheque" />
-						<h:commandButton value="Lançamentos" action="/restrito/lancamento" />
+						<h:commandButton value="Cheques" action="/restrito/cheque" /> 
+						<h:commandButton value="Lançamentos" action="/restrito/lancamento" /> 
+						<h:commandButton value="Ações" action="/restrito/acao" />
 					</td>
-					<td align="right">
-						<sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
+					<td align="right"><sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
 							<h:commandLink action="/admin/principal" title="Administrativo">
 								<h:graphicImage library="imagens" name="administrativo16.png" />
 							</h:commandLink>
