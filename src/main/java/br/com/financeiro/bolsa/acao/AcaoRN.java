@@ -1,6 +1,7 @@
 package br.com.financeiro.bolsa.acao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.financeiro.usuario.Usuario;
@@ -32,7 +33,32 @@ public class AcaoRN {
 	}
 
 	public List<AcaoVirtual> listarAcaoVirtual(Usuario usuario) throws RNException {
-		return null;
+		List<Acao> listaAcao = null;
+		List<AcaoVirtual> listaAcaoVirtual = new ArrayList<AcaoVirtual>();
+		AcaoVirtual acaoVirtual = null;
+		String cotacao = null;
+		float ultimoPreco = 0.0f;
+		float total = 0.0f;
+		int quantidade = 0;
+		try {
+			listaAcao = this.listar(usuario);
+			for (Acao acao : listaAcao) {
+				acaoVirtual = new AcaoVirtual();
+				acaoVirtual.setAcao(acao);
+				cotacao = this.retornaCotacao(YahooFinanceUtil.ULTIMO_PRECO_DIA_ACAO_INDICE, acao);
+				if (cotacao != null) {
+					ultimoPreco = new Float(cotacao).floatValue();
+					quantidade = acao.getQuantidade();
+					total = ultimoPreco * quantidade;
+					acaoVirtual.setUltimoPreco(ultimoPreco);
+					acaoVirtual.setTotal(total);
+					listaAcaoVirtual.add(acaoVirtual);
+				}
+			}
+		} catch (RNException e) {
+			throw new RNException("Não foi possível listar ações. Erro: " + e.getMessage());
+		}
+		return listaAcaoVirtual;
 	}
 
 	public String retornaCotacao(int indiceInformacao, Acao acao) throws RNException {
