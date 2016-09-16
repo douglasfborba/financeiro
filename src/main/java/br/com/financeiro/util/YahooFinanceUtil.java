@@ -63,11 +63,11 @@ public class YahooFinanceUtil {
 			arquivo.close();
 			valorRetorno = this.informacoesCotacao[indiceInformacao];
 		} catch (MalformedURLException e) {
-			throw new MalformedURLException("URL Inválida. Erro " + e.getMessage());
+			throw new MalformedURLException("URL Inválida. Erro: " + e.getMessage());
 		} catch (IOException e) {
 			throw new IOException("Problema de escrita e ou leitura. Erro: " + e.getMessage());
 		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new ArrayIndexOutOfBoundsException("Não existe o índice informado no array. Erro:" + e.getMessage());
+			throw new ArrayIndexOutOfBoundsException("Não existe o índice informado no array. Erro: " + e.getMessage());
 		}
 		return valorRetorno;
 	}
