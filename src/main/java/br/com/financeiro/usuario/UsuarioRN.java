@@ -3,8 +3,6 @@ package br.com.financeiro.usuario;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.util.DigestUtils;
-
 import br.com.financeiro.categoria.CategoriaRN;
 import br.com.financeiro.util.DAOFactory;
 import br.com.financeiro.util.RNException;
