@@ -21,7 +21,7 @@
 						</h:selectOneMenu> <h:commandButton value="Entidades" action="/restrito/entidade" />
 						<h:commandButton value="Cheques" action="/restrito/cheque" /> 
 						<h:commandButton value="Lançamentos" action="/restrito/lancamento" /> 
-						<h:commandButton value="Ações" action="/restrito/acao" />
+						<h:commandButton value="Ações" action="/restrito/acao" disabled="true" />
 					</td>
 					<td align="right"><sec:ifAnyGranted roles="ROLE_ADMINISTRADOR">
 							<h:commandLink action="/admin/principal" title="Administrativo">
