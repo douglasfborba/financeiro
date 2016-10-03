@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="extrato" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="valorRegistro" isDefault="false" forecolor="#009900">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($F{valor} < 0)]]></conditionExpression>
+			<style isDefault="false" style="valorRegistro" forecolor="#FF0000"/>
+		</conditionalStyle>
+	</style>
+	<style name="somaLancamentos" isDefault="false" forecolor="#009900">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{somaLancamentos} < 0)]]></conditionExpression>
+			<style isDefault="false" style="somaLancamentos" forecolor="#FF0000"/>
+		</conditionalStyle>
+	</style>
+	<style name="saldoFinal" isDefault="false" forecolor="#009900">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{saldoFinal} < 0)]]></conditionExpression>
+			<style isDefault="false" style="saldoFinal" forecolor="#FF0000"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="dataInicial" class="java.util.Date"/>
+	<parameter name="dataFinal" class="java.util.Date"/>
+	<parameter name="codigoUsuario" class="java.lang.Integer"/>
+	<parameter name="numeroConta" class="java.lang.Integer"/>
+	<parameter name="saldoAnterior" class="java.lang.Float"/>
+	<queryString>
+		<![CDATA[SELECT
+     usuario.`nome`,
+     usuario.`email`,
+     usuario.`celular`,
+     usuario.`nascimento`,
+     conta_bancaria.`cod_conta`,
+     conta_bancaria.`des_conta`,
+     lancamento.`descricao`,
+     lancamento.`data`,
+     (lancamento.valor*categoria.data)as valor
+FROM
+     `usuario` usuario,
+     `conta_bancaria` conta_bancaria,
+     `lancamento` lancamento,
+     `categoria` categoria
+WHERE
+     usuario.codigo = conta_bancaria.cod_usuario
+     and conta_bancaria.cod_conta = lancamento.conta
+     and lancamento.categoria = categoria.codigo
+     and usuario.codigo = $P{codigoUsuario}
+     and conta_bancaria.cod_conta = $P{numeroConta}
+     and lancamento.data >= $P{dataInicial}
+     and lancamento.data <= $P{dataFinal}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="celular" class="java.lang.String"/>
+	<field name="nascimento" class="java.sql.Timestamp"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="data" class="java.sql.Timestamp"/>
+	<field name="valor" class="java.lang.Double"/>
+	<field name="des_conta" class="java.lang.String"/>
+	<variable name="somaLancamentos" class="java.lang.Double" resetType="Group" resetGroup="conta" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="saldoFinal" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{somaLancamentos} + $P{saldoAnterior}]]></variableExpression>
+	</variable>
+	<group name="conta">
+		<groupExpression><![CDATA[$P{numeroConta}]]></groupExpression>
+		<groupHeader>
+			<band height="84">
+				<staticText>
+					<reportElement x="0" y="20" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Períodos Relatório:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="62" width="355" height="20"/>
+					<textElement/>
+					<text><![CDATA[Descrição:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="455" y="62" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Valor:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Saldo Anterior:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="62" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Data:]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="20" backcolor="#000000"/>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="0" width="555" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{des_conta}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="20" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.util.Date"><![CDATA[$P{dataInicial}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="200" y="20" width="34" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[a]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="234" y="20" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.util.Date"><![CDATA[$P{dataFinal}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="100" y="40" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.Float"><![CDATA[$P{saldoAnterior}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="59" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="3.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="82" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="3.0"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="41">
+				<staticText>
+					<reportElement x="321" y="1" width="112" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total de Lançamentos:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="221" y="21" width="212" height="20"/>
+					<textElement/>
+					<text><![CDATA[Saldo Final (Lançamentos + saldo Anterior):]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="3.0"/>
+					</graphicElement>
+				</line>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="433" y="1" width="122" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{somaLancamentos}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="433" y="21" width="122" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{saldoFinal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="174" height="79"/>
+				<textElement>
+					<font size="48"/>
+				</textElement>
+				<text><![CDATA[Extrato]]></text>
+			</staticText>
+			<image>
+				<reportElement x="174" y="0" width="381" height="79"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\Users\\Douglas\\git\\financeiro\\src\\main\\webapp\\resources\\imagens\\logotipo_g.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="92">
+			<staticText>
+				<reportElement x="0" y="12" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Usuário:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="52" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Celular:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Data de Nascimento:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="5.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="100" y="12" width="455" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="32" width="455" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="52" width="455" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{celular}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="72" width="455" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{nascimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="valorRegistro" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="valorRegistro" x="100" y="0" width="355" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="valorRegistro" x="455" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="5.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="163" y="0" width="228" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Exemplo do Livro Programação Java para Web]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="64" y="22" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="22" width="64" height="20"/>
+				<textElement/>
+				<text><![CDATA[Extraído em:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="405" y="22" width="98" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página(s) "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="503" y="22" width="52" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
