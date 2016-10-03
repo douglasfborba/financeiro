@@ -156,13 +156,7 @@ public class LancamentoBean implements Serializable {
 			Calendar inicio = new GregorianCalendar();
 			inicio.add(Calendar.MONTH, -1);
 			LancamentoRN lancamentoRN = new LancamentoRN();
-			try {
-				this.saldoGeral = lancamentoRN.saldo(conta, dataSaldo.getTime());
-			} catch (RNException e) {
-				FacesContext context = FacesContext.getCurrentInstance();
-				FacesMessage facesMessage = new FacesMessage(e.getMessage());
-				context.addMessage(null, facesMessage);
-			}
+			this.saldoGeral = lancamentoRN.saldo(conta, dataSaldo.getTime());
 			this.lista = lancamentoRN.listar(conta, inicio.getTime(), null);
 			Categoria categoria = null;
 			double saldo = this.saldoGeral;
@@ -238,13 +232,11 @@ public class LancamentoBean implements Serializable {
 		parametrosRelatorio.put("codigoUsuario", contextoBean.getUsuarioLogado().getCodigo());
 		parametrosRelatorio.put("numeroConta", contextoBean.getContaAtiva().getConta());
 		parametrosRelatorio.put("dataInicial", this.getDataInicialRelatorio());
+		parametrosRelatorio.put("dataFinal", this.getDataFinalRelatorio());
+		parametrosRelatorio.put("saldoAnterior", lancamentoRN.saldo(contextoBean.getContaAtiva(), dataSaldo));
 		try {
-			parametrosRelatorio.put("saldoAnterior", lancamentoRN.saldo(contextoBean.getContaAtiva(), dataSaldo));
 			this.arquivoRetorno = relatorioUtil.gerarRelatorio(parametrosRelatorio, nomeRelatorioJasper,
 					nomeRelatorioSaida, RelatorioUtil.RELATORIO_PDF);
-		} catch (RNException e) {
-			context.addMessage(null, new FacesMessage(e.getMessage()));
-			return null;
 		} catch (UtilException e) {
 			context.addMessage(null, new FacesMessage(e.getMessage()));
 			return null;
