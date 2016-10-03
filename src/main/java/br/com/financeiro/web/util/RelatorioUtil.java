@@ -36,7 +36,7 @@ public class RelatorioUtil {
 	public static final int RELATORIO_HTML = 3;
 	public static final int RELATORIO_PLANILHA_OPEN_OFFICE = 4;
 
-	public StreamedContent gerarRelatorio(HashMap<String, Integer> parametrosRelatorio, String nomeRelatorioJasper,
+	public StreamedContent gerarRelatorio(HashMap<String, Object> parametrosRelatorio, String nomeRelatorioJasper,
 			String nomeRelatorioSaida, int tipoRelatorio) throws UtilException {
 		StreamedContent arquivoRetorno = null;
 		try {

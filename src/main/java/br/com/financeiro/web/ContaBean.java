@@ -74,7 +74,7 @@ public class ContaBean {
 		String nomeRelatorioJasper = "contas";
 		String nomeRelatorioSaida = usuario + "_contas";
 		RelatorioUtil relatorioUtil = new RelatorioUtil();
-		HashMap<String, Integer> parametrosRelatorio = new HashMap<String, Integer>();
+		HashMap<String, Object> parametrosRelatorio = new HashMap<String, Object>();
 		parametrosRelatorio.put("codigoUsuario", contextoBean.getUsuarioLogado().getCodigo());
 		try {
 			this.arquivoRetorno = relatorioUtil.gerarRelatorio(parametrosRelatorio, nomeRelatorioJasper,
