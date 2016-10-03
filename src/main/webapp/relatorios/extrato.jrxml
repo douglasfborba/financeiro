@@ -28,23 +28,15 @@
 	<parameter name="saldoAnterior" class="java.lang.Float"/>
 	<queryString>
 		<![CDATA[SELECT
-     usuario.`nome`,
-     usuario.`email`,
-     usuario.`celular`,
-     usuario.`nascimento`,
-     conta_bancaria.`cod_conta`,
-     conta_bancaria.`des_conta`,
-     lancamento.`descricao`,
-     lancamento.`data`,
-     (lancamento.valor*categoria.data)as valor
+    usuario.nome, usuario.email,
+    usuario.celular, usuario.nascimento,
+    conta_bancaria.cod_conta, conta_bancaria.des_conta,
+    lancamento.descricao, lancamento.data,
+    (lancamento.valor * categoria.fator) as valor
 FROM
-     `usuario` usuario,
-     `conta_bancaria` conta_bancaria,
-     `lancamento` lancamento,
-     `categoria` categoria
+     usuario, conta_bancaria, lancamento, categoria
 WHERE
      usuario.codigo = conta_bancaria.cod_usuario
-     and conta_bancaria.cod_conta = lancamento.conta
      and lancamento.categoria = categoria.codigo
      and usuario.codigo = $P{codigoUsuario}
      and conta_bancaria.cod_conta = $P{numeroConta}
@@ -54,11 +46,12 @@ WHERE
 	<field name="nome" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="celular" class="java.lang.String"/>
-	<field name="nascimento" class="java.sql.Timestamp"/>
-	<field name="descricao" class="java.lang.String"/>
-	<field name="data" class="java.sql.Timestamp"/>
-	<field name="valor" class="java.lang.Double"/>
+	<field name="nascimento" class="java.sql.Date"/>
+	<field name="cod_conta" class="java.lang.Integer"/>
 	<field name="des_conta" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="data" class="java.sql.Date"/>
+	<field name="valor" class="java.math.BigDecimal"/>
 	<variable name="somaLancamentos" class="java.lang.Double" resetType="Group" resetGroup="conta" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
@@ -104,18 +97,18 @@ WHERE
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{des_conta}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="100" y="20" width="100" height="20"/>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="100" y="20" width="74" height="20"/>
 					<textElement/>
 					<textFieldExpression class="java.util.Date"><![CDATA[$P{dataInicial}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="200" y="20" width="34" height="20"/>
+					<reportElement x="174" y="20" width="34" height="20"/>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[a]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="234" y="20" width="100" height="20"/>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="209" y="20" width="67" height="20"/>
 					<textElement/>
 					<textFieldExpression class="java.util.Date"><![CDATA[$P{dataFinal}]]></textFieldExpression>
 				</textField>
@@ -230,10 +223,10 @@ WHERE
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{celular}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="100" y="72" width="455" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{nascimento}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{nascimento}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -247,7 +240,7 @@ WHERE
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="valorRegistro" x="0" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{data}]]></textFieldExpression>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{data}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="valorRegistro" x="100" y="0" width="355" height="20"/>
@@ -288,15 +281,10 @@ WHERE
 				<textElement/>
 				<text><![CDATA[Extraído em:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="405" y="22" width="98" height="20"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Página(s) "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="503" y="22" width="52" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA["de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<reportElement x="309" y="22" width="246" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página(s) "+$V{PAGE_NUMBER}+" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
