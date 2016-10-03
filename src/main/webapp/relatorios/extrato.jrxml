@@ -69,13 +69,17 @@ WHERE
 				</staticText>
 				<staticText>
 					<reportElement x="100" y="62" width="355" height="20"/>
-					<textElement/>
-					<text><![CDATA[Descrição:]]></text>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Descrição]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="455" y="62" width="100" height="20"/>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[Valor:]]></text>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="40" width="100" height="20"/>
@@ -84,8 +88,10 @@ WHERE
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="62" width="100" height="20"/>
-					<textElement/>
-					<text><![CDATA[Data:]]></text>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data]]></text>
 				</staticText>
 				<rectangle>
 					<reportElement x="0" y="0" width="555" height="20" backcolor="#000000"/>
@@ -132,14 +138,14 @@ WHERE
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="41">
+			<band height="52">
 				<staticText>
-					<reportElement x="321" y="1" width="112" height="20"/>
+					<reportElement x="321" y="4" width="112" height="20"/>
 					<textElement/>
 					<text><![CDATA[Total de Lançamentos:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="221" y="21" width="212" height="20"/>
+					<reportElement x="221" y="24" width="212" height="20"/>
 					<textElement/>
 					<text><![CDATA[Saldo Final (Lançamentos + saldo Anterior):]]></text>
 				</staticText>
@@ -150,12 +156,12 @@ WHERE
 					</graphicElement>
 				</line>
 				<textField pattern="¤ #,##0.00">
-					<reportElement x="433" y="1" width="122" height="20"/>
+					<reportElement x="433" y="4" width="122" height="20"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression class="java.lang.Double"><![CDATA[$V{somaLancamentos}]]></textFieldExpression>
 				</textField>
 				<textField pattern="¤ #,##0.00">
-					<reportElement x="433" y="21" width="122" height="20"/>
+					<reportElement x="433" y="24" width="122" height="20"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression class="java.lang.Double"><![CDATA[$V{saldoFinal}]]></textFieldExpression>
 				</textField>
@@ -262,30 +268,29 @@ WHERE
 					<pen lineWidth="5.0"/>
 				</graphicElement>
 			</line>
-		</band>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="163" y="0" width="228" height="20"/>
+				<reportElement x="164" y="7" width="228" height="20"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Exemplo do Livro Programação Java para Web]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="64" y="22" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="22" width="64" height="20"/>
-				<textElement/>
-				<text><![CDATA[Extraído em:]]></text>
-			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="309" y="22" width="246" height="20"/>
+				<reportElement x="309" y="34" width="246" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página(s) "+$V{PAGE_NUMBER}+" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="34" width="64" height="20"/>
+				<textElement/>
+				<text><![CDATA[Extraído em:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="64" y="34" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>
