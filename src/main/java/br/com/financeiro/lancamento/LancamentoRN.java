@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.com.financeiro.conta.Conta;
 import br.com.financeiro.util.DAOFactory;
-import br.com.financeiro.util.RNException;
 
 public class LancamentoRN {
 	private LancamentoDAO lancamentoDAO;
@@ -26,11 +25,12 @@ public class LancamentoRN {
 		return this.lancamentoDAO.carregar(lancamento);
 	}
 
-	public float saldo(Conta conta, Date data) throws RNException {
+	public float saldo(Conta conta, Date data) {
+		float saldoInicial;
 		if (data.before(conta.getDataCadastro())) {
-			throw new RNException("Data solicitada anterior à criação da conta.");
+			saldoInicial = 0;
 		}
-		float saldoInicial = conta.getSaldoInicial();
+		saldoInicial = conta.getSaldoInicial();
 		float saldoNaData = this.lancamentoDAO.saldo(conta, data);
 		return saldoInicial + saldoNaData;
 	}
