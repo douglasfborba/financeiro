@@ -37,6 +37,7 @@ FROM
      usuario, conta_bancaria, lancamento, categoria
 WHERE
      usuario.codigo = conta_bancaria.cod_usuario
+     and conta_bancaria.cod_conta = lancamento.conta
      and lancamento.categoria = categoria.codigo
      and usuario.codigo = $P{codigoUsuario}
      and conta_bancaria.cod_conta = $P{numeroConta}
@@ -46,7 +47,7 @@ WHERE
 	<field name="nome" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="celular" class="java.lang.String"/>
-	<field name="nascimento" class="java.sql.Date"/>
+	<field name="nascimento" class="java.sql.Timestamp"/>
 	<field name="cod_conta" class="java.lang.Integer"/>
 	<field name="des_conta" class="java.lang.String"/>
 	<field name="descricao" class="java.lang.String"/>
@@ -59,7 +60,7 @@ WHERE
 		<variableExpression><![CDATA[$V{somaLancamentos} + $P{saldoAnterior}]]></variableExpression>
 	</variable>
 	<group name="conta">
-		<groupExpression><![CDATA[$P{numeroConta}]]></groupExpression>
+		<groupExpression><![CDATA[$F{cod_conta}]]></groupExpression>
 		<groupHeader>
 			<band height="84">
 				<staticText>
