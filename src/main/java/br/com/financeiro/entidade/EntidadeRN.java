@@ -2,6 +2,7 @@ package br.com.financeiro.entidade;
 
 import java.util.List;
 
+import br.com.financeiro.usuario.Usuario;
 import br.com.financeiro.util.DAOFactory;
 
 public class EntidadeRN {
@@ -23,7 +24,7 @@ public class EntidadeRN {
 		this.entidadeDAO.excluir(entidade);
 	}
 
-	public List<Entidade> listar() {
-		return this.entidadeDAO.listar();
+	public List<Entidade> listar(Usuario usuario) {
+		return this.entidadeDAO.listar(usuario);
 	}
 }

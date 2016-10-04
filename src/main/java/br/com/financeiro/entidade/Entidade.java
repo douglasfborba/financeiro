@@ -6,7 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import br.com.financeiro.usuario.Usuario;
 
 @Entity
 @Table(name = "entidade")
@@ -21,6 +28,11 @@ public class Entidade implements Serializable {
 	private String nome;
 
 	private Double classificacao;
+
+	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "cod_usuario", nullable = false)
+	private Usuario usuario;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -46,6 +58,14 @@ public class Entidade implements Serializable {
 		this.classificacao = classificacao;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,6 +73,7 @@ public class Entidade implements Serializable {
 		result = prime * result + ((classificacao == null) ? 0 : classificacao.hashCode());
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -79,6 +100,11 @@ public class Entidade implements Serializable {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
 	}

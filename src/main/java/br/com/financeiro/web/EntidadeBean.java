@@ -8,6 +8,7 @@ import javax.faces.bean.RequestScoped;
 
 import br.com.financeiro.entidade.Entidade;
 import br.com.financeiro.entidade.EntidadeRN;
+import br.com.financeiro.web.util.ContextoUtil;
 
 @ManagedBean(name = "entidadeBean")
 @RequestScoped
@@ -20,8 +21,12 @@ public class EntidadeBean {
 	}
 	
 	public void salvar() {
+		ContextoBean contextoBean = ContextoUtil.getContextoBean();
+		this.entidade.setUsuario(contextoBean.getUsuarioLogado());
 		EntidadeRN entidadeRN = new EntidadeRN();
 		entidadeRN.salvar(this.entidade);
+		this.entidade = new Entidade();
+		this.lista = null;
 	}
 
 	public void editar() { }
@@ -43,8 +48,9 @@ public class EntidadeBean {
 
 	public List<Entidade> getLista() {
 		if (this.lista == null) {
+			ContextoBean contextoBean = ContextoUtil.getContextoBean();
 			EntidadeRN entidadeRN = new EntidadeRN();
-			this.lista = entidadeRN.listar();
+			this.lista = entidadeRN.listar(contextoBean.getUsuarioLogado());
 		}
 		return this.lista;
 	}

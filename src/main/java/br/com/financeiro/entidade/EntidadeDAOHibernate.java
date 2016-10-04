@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import br.com.financeiro.usuario.Usuario;
 
 public class EntidadeDAOHibernate implements EntidadeDAO {
 	private Session session;
@@ -29,8 +32,9 @@ public class EntidadeDAOHibernate implements EntidadeDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Entidade> listar() {
+	public List<Entidade> listar(Usuario usuario) {
 		Criteria criteria = this.session.createCriteria(Entidade.class);
+		criteria.add(Restrictions.eq("usuario", usuario));
 		return criteria.list();
 	}
 }
